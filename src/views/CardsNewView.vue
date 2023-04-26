@@ -17,12 +17,25 @@
                     <input type="text" name="cardPower" id="cardPower" v-model="card.power">
                 </div>
                 <div>
-                    <label for="cardType">Type:</label>
-                    <input type="text" name="cardType" id="cardType" v-model="card.type_id">
+                    <label for="type">Type:</label>
+
+                    <select name="type" id="type" v-model="card.type">
+                        <option v-for="(type, index) in types"
+                                :key="index"
+                                :value="type.id">
+                            {{ type.name }}
+                        </option>
+                    </select>
                 </div>
                 <div>
-                    <label for="cardClass">Class:</label>
-                    <input type="text" name="cardClass" id="cardClass" v-model="card.archetype_id">
+                    <label for="archetype">Class:</label>
+
+                    <select name="archetype" id="archetype" v-model="card.archetype">
+                        <option v-for="(archetype, index) in archetypes" :key="index"
+                                :value="archetype.id">
+                            {{ archetype.name }}
+                        </option>
+                    </select>
                 </div>
                 <div>
                     <button @click="addCard">Add</button>
@@ -41,9 +54,11 @@ export default {
                 name: '',
                 image: '',
                 power: 0,
-                type_id: 0,
-                archetype_id: 0
+                type: 0,
+                archetype: 0,
             },
+            types: {},
+            archetypes: {},
             message: ''
         }
     },
@@ -52,12 +67,11 @@ export default {
             e.preventDefault()
 
             let formData = new FormData();
-
             formData.append('name', this.card.name);
             formData.append('image', this.card.image);
             formData.append('power', this.card.power);
-            formData.append('type_id', this.card.type_id);
-            formData.append('archetype_id', this.card.archetype_id);
+            formData.append('type_id', this.card.type);
+            formData.append('class_id', this.card.archetype);
 
             try {
                 const addCard = await fetch('http://localhost:3000/cards/', {
@@ -70,7 +84,21 @@ export default {
             } catch (err) {
                 this.message = err;
             }
+        },
+
+        async getTypes() {
+            const data = await fetch('http://localhost:3000/types')
+            this.types = await data.json()
+        },
+
+        async getArchetypes() {
+            const data = await fetch('http://localhost:3000/classes')
+            this.archetypes = await data.json()
         }
+    },
+    async mounted() {
+        await this.getTypes()
+        await this.getArchetypes()
     }
 }
 </script>

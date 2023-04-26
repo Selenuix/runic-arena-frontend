@@ -34,7 +34,7 @@ export default {
     name: "CardsView",
     data() {
         return {
-            cards: String
+            cards: null
         }
     },
     methods: {
@@ -45,13 +45,12 @@ export default {
         async deleteCard(cardId) {
             await fetch(`http://localhost:3000/cards/${cardId}`, {
                 method: 'DELETE'
+            }).then(() => {
+                this.getCards()
             })
         }
     },
     mounted() {
-        this.getCards()
-    },
-    updated() {
         this.getCards()
     }
 }
