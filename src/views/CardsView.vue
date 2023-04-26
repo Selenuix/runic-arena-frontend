@@ -20,7 +20,7 @@
                     <td>{{ card.type_id }}</td>
                     <td>{{ card.class_id }}</td>
                     <td>
-                        <button>Edit</button>
+                        <RouterLink to="/cards/new">Edit</RouterLink>
                         <button @click="deleteCard(card.id)">Delete</button>
                     </td>
                 </tr>
