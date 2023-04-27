@@ -1,6 +1,7 @@
 <template>
+    <h1>{{ card.name }}</h1>
+
     <div class="cards-container">
-        <h1>Manage Cards</h1>
         <div class="cards-items">
             <p v-if="message">{{ message }}</p>
             <form action="#" method="post">
@@ -38,7 +39,7 @@
                     </select>
                 </div>
                 <div>
-                    <button @click="addCard">Add</button>
+                    <button @click="editCard">Edit</button>
                 </div>
             </form>
         </div>
@@ -47,23 +48,38 @@
 
 <script>
 export default {
-    name: "CardsView",
+    name: "CardsEditView",
     data() {
         return {
             card: {
                 name: '',
                 image: '',
                 power: 0,
-                type: 0,
+                type: Number,
                 archetype: 0,
             },
             types: {},
+            selectedType: 0,
             archetypes: {},
             message: ''
         }
     },
     methods: {
-        async addCard(e) {
+        async getCard(cardId) {
+            const data = await fetch(`http://localhost:3000/cards/${cardId}`)
+            this.card = await data.json()
+        },
+        async getTypes() {
+            const data = await fetch('http://localhost:3000/types')
+            this.types = await data.json()
+        },
+
+        async getArchetypes() {
+            const data = await fetch('http://localhost:3000/classes')
+            this.archetypes = await data.json()
+        },
+
+        async editCard(e) {
             e.preventDefault()
 
             let formData = new FormData();
@@ -73,29 +89,22 @@ export default {
             formData.append('type_id', this.card.type);
             formData.append('class_id', this.card.archetype);
 
+
             try {
-                await fetch('http://localhost:3000/cards/', {
-                    method: 'POST',
+                await fetch(`http://localhost:3000/cards/${this.card.id}`, {
+                    method: 'PUT',
                     body: formData
                 })
 
-                this.message = "Card has been sucessfully created."
+                this.message = "Card has been sucessfully edited."
             } catch (err) {
                 this.message = err;
             }
-        },
 
-        async getTypes() {
-            const data = await fetch('http://localhost:3000/types')
-            this.types = await data.json()
-        },
-
-        async getArchetypes() {
-            const data = await fetch('http://localhost:3000/classes')
-            this.archetypes = await data.json()
         }
     },
     async mounted() {
+        await this.getCard(this.$route.params.id)
         await this.getTypes()
         await this.getArchetypes()
     }
@@ -103,4 +112,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>
