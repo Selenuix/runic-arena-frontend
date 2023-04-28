@@ -4,13 +4,16 @@
   </div>
   <div class="archetypes-items">
             <table>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-
+                <tr> 
+                  <th>Id</th>
+                  <th>Icon</th>
+                  <th>Name</th>
+                   
                 </tr>
                 <tr v-for="(archetype, index) in archetypes" :key="index" class="archetype-item">
+
                     <td>{{ archetype.id }}</td>
+                    <td><font-awesome-icon icon="fa-solid fa-shield" /></td>
                     <td>{{ archetype.name }}</td>
                     <td>
                         <button>Edit</button>
@@ -49,5 +52,5 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 </style>
