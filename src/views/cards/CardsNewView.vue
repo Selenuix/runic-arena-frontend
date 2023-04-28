@@ -1,16 +1,18 @@
 <template>
     <div class="cards-container">
-        <h1>Manage Cards</h1>
+        <h1>Add a Card</h1>
         <div class="cards-items">
             <p v-if="message">{{ message }}</p>
-            <form action="#" method="post">
+            <form action="#" method="post" enctype="multipart/form-data">
                 <div>
                     <label for="cardName">Name:</label>
                     <input type="text" name="cardName" id="cardName" v-model="card.name">
+                    <button @click="getRandomMonsterName">Generate</button>
                 </div>
                 <div>
-                    <label for="cardImage">Image:</label>
-                    <input type="text" name="cardImage" id="cardImage" v-model="card.image">
+                    <label for="image">Image:</label>
+                    <input type="file" name="image" id="image" ref="cardImage" required>
+
                 </div>
                 <div>
                     <label for="cardPower">Power:</label>
@@ -46,6 +48,8 @@
 </template>
 
 <script>
+import {getMonsterName} from "@/utils/randomizer";
+
 export default {
     name: "CardsView",
     data() {
@@ -66,6 +70,8 @@ export default {
         async addCard(e) {
             e.preventDefault()
 
+            this.card.image = this.$refs.cardImage.files[0]
+
             let formData = new FormData();
             formData.append('name', this.card.name);
             formData.append('image', this.card.image);
@@ -80,8 +86,9 @@ export default {
                 })
 
                 this.message = "Card has been sucessfully created."
-            } catch (err) {
-                this.message = err;
+                this.$router.push('/cards')
+            } catch (error) {
+                this.message = error.response.data.message
             }
         },
 
@@ -93,7 +100,12 @@ export default {
         async getArchetypes() {
             const data = await fetch('http://localhost:3000/classes')
             this.archetypes = await data.json()
-        }
+        },
+
+        getRandomMonsterName(e) {
+            e.preventDefault()
+            this.card.name = getMonsterName()
+        },
     },
     async mounted() {
         await this.getTypes()

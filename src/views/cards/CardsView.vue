@@ -9,8 +9,8 @@
                     <th>Name</th>
                     <th>Image</th>
                     <th>Power</th>
-                    <th>Type_id</th>
-                    <th>Class_id</th>
+                    <th>Type</th>
+                    <th>Class</th>
                     <th>Actions</th>
                 </tr>
                 <tr v-for="(card, index) in cards" :key="index" class="card-item">
@@ -18,8 +18,8 @@
                     <td>{{ card.name }}</td>
                     <td>{{ card.image }}</td>
                     <td>{{ card.power }}</td>
-                    <td>{{ card.type_id }}</td>
-                    <td>{{ card.class_id }}</td>
+                    <td>{{ card.type.name }}</td>
+                    <td>{{ card.class.name }}</td>
                     <td>
                         <RouterLink :to="{name: 'cards-edit', params: {id: card.id}}">Edit</RouterLink>
                         <button @click="deleteCard(card.id)">Delete</button>
@@ -51,8 +51,8 @@ export default {
             })
         }
     },
-    mounted() {
-        this.getCards()
+    async mounted() {
+        await this.getCards()
     }
 }
 </script>

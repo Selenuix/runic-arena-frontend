@@ -1,10 +1,10 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import CardsView from "@/views/CardsView.vue";
-import CardsNewView from "@/views/CardsNewView.vue";
 import TypesView from "@/views/TypesView.vue";
 import ClassesView from "@/views/ClassesView.vue";
-import CardsEditView from "@/views/CardsEditView.vue";
+import CardsView from "@/views/cards/CardsView.vue";
+import CardsNewView from "@/views/cards/CardsNewView.vue";
+import CardsEditView from "@/views/cards/CardsEditView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
