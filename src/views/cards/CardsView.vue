@@ -1,7 +1,7 @@
 <template>
     <div class="cards-container">
         <h1>Manage Cards</h1>
-        <RouterLink to="/cards/new">Add</RouterLink>
+        <RouterLink to="/card/new">Add</RouterLink>
         <div class="cards-items">
             <table>
                 <tr>
@@ -21,7 +21,7 @@
                     <td>{{ card.type.name }}</td>
                     <td>{{ card.class.name }}</td>
                     <td>
-                        <RouterLink :to="{name: 'cards-edit', params: {id: card.id}}">Edit</RouterLink>
+                        <RouterLink :to="{name: 'card-edit', params: {id: card.id}}">Edit</RouterLink>
                         <button @click="deleteCard(card.id)">Delete</button>
                     </td>
                 </tr>

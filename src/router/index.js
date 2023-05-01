@@ -1,10 +1,15 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import TypesView from "@/views/TypesView.vue";
-import ClassesView from "@/views/ClassesView.vue";
+
+import ClassesView from "@/views/classes/ClassesView.vue";
+
 import CardsView from "@/views/cards/CardsView.vue";
-import CardsNewView from "@/views/cards/CardsNewView.vue";
-import CardsEditView from "@/views/cards/CardsEditView.vue";
+import CardNewView from "@/views/cards/CardNewView.vue";
+import CardEditView from "@/views/cards/CardEditView.vue";
+
+import TypesView from "@/views/types/TypesView.vue";
+import TypeEditView from "@/views/types/TypeEditView.vue";
+import TypeNewView from "@/views/types/TypeNewView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,18 +26,28 @@ const router = createRouter({
         },
         {
             path: '/cards/new',
-            name: 'cards-new',
-            component: CardsNewView
+            name: 'card-new',
+            component: CardNewView
         },
         {
             path: '/cards/edit/:id(\\d+)',
-            name: 'cards-edit',
-            component: CardsEditView
+            name: 'card-edit',
+            component: CardEditView
         },
         {
             path: '/types',
             name: 'types',
             component: TypesView
+        },
+        {
+            path: '/types/new',
+            name: 'type-new',
+            component: TypeNewView
+        },
+        {
+            path: '/types/edit/:id(\\d+)',
+            name: 'type-edit',
+            component: TypeEditView
         },
         {
             path: '/classes',

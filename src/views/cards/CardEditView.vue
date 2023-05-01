@@ -51,7 +51,7 @@
 import {getMonsterName} from "@/utils/randomizer";
 
 export default {
-    name: "CardsEditView",
+    name: "CardEditView",
     data() {
         return {
             card: {
