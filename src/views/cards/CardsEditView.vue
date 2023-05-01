@@ -4,14 +4,15 @@
     <div class="cards-container">
         <div class="cards-items">
             <p v-if="message">{{ message }}</p>
-            <form action="#" method="post">
+            <form action="#" method="post" enctype="multipart/form-data">
                 <div>
                     <label for="cardName">Name:</label>
                     <input type="text" name="cardName" id="cardName" v-model="card.name">
+                    <button @click="getRandomMonsterName">Generate</button>
                 </div>
                 <div>
-                    <label for="cardImage">Image:</label>
-                    <input type="text" name="cardImage" id="cardImage" v-model="card.image">
+                    <label for="image">Image ({{ card.image }}):</label><br>
+                    <input type="file" name="image" id="image" ref="image">
                 </div>
                 <div>
                     <label for="cardPower">Power:</label>
@@ -47,6 +48,8 @@
 </template>
 
 <script>
+import {getMonsterName} from "@/utils/randomizer";
+
 export default {
     name: "CardsEditView",
     data() {
@@ -82,6 +85,18 @@ export default {
         async editCard(e) {
             e.preventDefault()
 
+            if (this.$refs.image.files[0]) {
+                console.log('Updating image')
+                if (this.card.image === this.$refs.image.files[0].name) {
+                    console.log('Image is the same')
+                } else {
+                    console.log('Image changed')
+                    console.log(this.$refs.image.files[0])
+                }
+            } else {
+                console.log('Image not updated')
+            }
+
             let formData = new FormData();
             formData.append('name', this.card.name);
             formData.append('image', this.card.image);
@@ -92,16 +107,22 @@ export default {
 
             try {
                 await fetch(`http://localhost:3000/cards/${this.card.id}`, {
-                    method: 'PUT',
+                    method: 'PATCH',
                     body: formData
                 })
 
                 this.message = "Card has been sucessfully edited."
+                this.$router.push('/cards')
             } catch (err) {
                 this.message = err;
             }
 
-        }
+        },
+
+        getRandomMonsterName(e) {
+            e.preventDefault()
+            this.card.name = getMonsterName()
+        },
     },
     async mounted() {
         await this.getCard(this.$route.params.id)

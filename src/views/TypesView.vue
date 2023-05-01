@@ -62,13 +62,12 @@ export default {
     async deleteType(typeId) {
       await fetch(`http://localhost:3000/classes/${typeId}`, {
         method: 'DELETE'
+      }).then(() => {
+        this.getTypes()
       })
     }
   },
   mounted() {
-    this.getTypes()
-  },
-  updated() {
     this.getTypes()
   }
 }

@@ -11,7 +11,7 @@
                 </div>
                 <div>
                     <label for="image">Image:</label>
-                    <input type="file" name="image" id="image" ref="cardImage" required>
+                    <input type="file" name="image" id="image" ref="image">
 
                 </div>
                 <div>
@@ -70,7 +70,7 @@ export default {
         async addCard(e) {
             e.preventDefault()
 
-            this.card.image = this.$refs.cardImage.files[0]
+            this.card.image = this.$refs.image.files[0]
 
             let formData = new FormData();
             formData.append('name', this.card.name);

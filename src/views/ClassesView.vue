@@ -68,13 +68,12 @@ export default {
         async deleteArchetype(archetypeId) {
             await fetch(`http://localhost:3000/classes/${archetypeId}`, {
                 method: 'DELETE'
+            }).then(() => {
+                this.getArchetypes()
             })
         }
     },
     mounted() {
-        this.getArchetypes()
-    },
-    updated() {
         this.getArchetypes()
     }
 }
