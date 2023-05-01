@@ -1,7 +1,7 @@
 <template>
     <div class="cards-container">
         <h1>Manage Cards</h1>
-        <RouterLink to="/card/new">Add</RouterLink>
+        <RouterLink to="/cards/new">Add</RouterLink>
         <div class="cards-items">
             <table>
                 <tr>
@@ -18,8 +18,14 @@
                     <td>{{ card.name }}</td>
                     <td>{{ card.image }}</td>
                     <td>{{ card.power }}</td>
-                    <td>{{ card.type.name }}</td>
-                    <td>{{ card.class.name }}</td>
+                    <td>
+                        {{ card.type.name }}
+                        <font-awesome-icon :icon="card.type.icon"/>
+                    </td>
+                    <td>
+                        {{ card.class.name }}
+                        <font-awesome-icon :icon="card.class.icon"/>
+                    </td>
                     <td>
                         <RouterLink :to="{name: 'card-edit', params: {id: card.id}}">Edit</RouterLink>
                         <button @click="deleteCard(card.id)">Delete</button>
@@ -31,17 +37,62 @@
 </template>
 
 <script>
+import {
+    faBullseye,
+    faHatWizard,
+    faMoon,
+    faShield,
+    faStaffSnake,
+    faSun,
+    faUserNinja
+} from "@fortawesome/free-solid-svg-icons";
+
 export default {
     name: "CardsView",
     data() {
         return {
-            cards: null
+            cards: []
         }
     },
     methods: {
         async getCards() {
             const data = await fetch('http://localhost:3000/cards')
             this.cards = await data.json()
+
+            for (const card of Object.values(this.cards)) {
+                let icon = await this.getIconForType(card.type)
+                let archetypeIcon = await this.getIconForArchetype(card.class)
+
+                Object.assign(card.type, {"icon": icon});
+                Object.assign(card.class, {"icon": archetypeIcon});
+            }
+        },
+
+        async getIconForType(type) {
+            switch (type.name) {
+                case 'Chaos':
+                    return faMoon
+                case 'Halo':
+                    return faSun
+                default:
+                    return null // no icon for unknown types
+            }
+        },
+        async getIconForArchetype(archetype) {
+            switch (archetype.name) {
+                case 'Warrior':
+                    return faShield
+                case 'Healer':
+                    return faStaffSnake
+                case 'Assassin':
+                    return faUserNinja
+                case 'Wizard':
+                    return faHatWizard
+                case 'Archer':
+                    return faBullseye
+                default:
+                    return null // no icon for unknown types
+            }
         },
         async deleteCard(cardId) {
             await fetch(`http://localhost:3000/cards/${cardId}`, {
@@ -49,13 +100,14 @@ export default {
             }).then(() => {
                 this.getCards()
             })
-        }
+        },
     },
+
     async mounted() {
         await this.getCards()
     }
 }
 </script>
 
-<style>
+<style scoped>
 </style>

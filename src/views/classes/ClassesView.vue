@@ -42,14 +42,14 @@ export default {
     methods: {
         async getArchetypes() {
             const data = await fetch('http://localhost:3000/classes')
-            const archetypes = await data.json()
-            this.archetypes = archetypes.map(archetype => {
-                return {
-                    ...archetype,
-                    icon: this.getIconForArchetype(archetype)
-                }
-            })
+            this.archetypes = await data.json()
+
+            for (const archetype of Object.values(this.archetypes)) {
+                let icon = await this.getIconForArchetype(archetype)
+                Object.assign(archetype, {"icon": icon})
+            }
         },
+
         getIconForArchetype(archetype) {
             switch (archetype.name) {
                 case 'Warrior':

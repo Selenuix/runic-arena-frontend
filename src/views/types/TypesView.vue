@@ -42,13 +42,12 @@ export default {
     methods: {
         async getTypes() {
             const data = await fetch('http://localhost:3000/types')
-            const types = await data.json()
-            this.types = types.map(type => {
-                return {
-                    ...type,
-                    icon: this.getIconForType(type)
-                }
-            })
+            this.types = await data.json()
+
+            for (const type of Object.values(this.types)) {
+                let icon = await this.getIconForType(type)
+                Object.assign(type, {"icon": icon})
+            }
         },
         getIconForType(type) {
             switch (type.name) {
