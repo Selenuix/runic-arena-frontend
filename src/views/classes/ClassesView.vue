@@ -3,20 +3,21 @@
         <h1>Manage Classes</h1>
     </div>
     <div class="archetypes-items">
+        <RouterLink to="/types/new">Add</RouterLink>
         <table>
             <tr>
                 <th>Id</th>
                 <th>Icon</th>
                 <th>Name</th>
-
             </tr>
             <tr v-for="(archetype, index) in archetypes" :key="index" class="archetype-item">
-
                 <td>{{ archetype.id }}</td>
-                <td><font-awesome-icon :icon="archetype.icon" /></td>
+                <td>
+                    <font-awesome-icon :icon="archetype.icon"/>
+                </td>
                 <td>{{ archetype.name }}</td>
                 <td>
-                    <button>Edit</button>
+                    <RouterLink :to="{name: 'class-edit', params: {id: archetype.id}}">Edit</RouterLink>
                     <button @click="deleteArchetype(archetype.id)">Delete</button>
                 </td>
             </tr>
@@ -25,8 +26,8 @@
 </template>
 
 <script>
-import { faBullseye, faHatWizard, faShield, faStaffSnake, faUserNinja } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {faBullseye, faHatWizard, faShield, faStaffSnake, faUserNinja} from '@fortawesome/free-solid-svg-icons'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 export default {
     name: "ClassesView",

@@ -1,8 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 
-import ClassesView from "@/views/classes/ClassesView.vue";
-
 import CardsView from "@/views/cards/CardsView.vue";
 import CardNewView from "@/views/cards/CardNewView.vue";
 import CardEditView from "@/views/cards/CardEditView.vue";
@@ -10,6 +8,10 @@ import CardEditView from "@/views/cards/CardEditView.vue";
 import TypesView from "@/views/types/TypesView.vue";
 import TypeEditView from "@/views/types/TypeEditView.vue";
 import TypeNewView from "@/views/types/TypeNewView.vue";
+
+import ClassesView from "@/views/classes/ClassesView.vue";
+import ClassEditView from "@/views/classes/ClassEditView.vue";
+import ClassNewView from "@/views/classes/ClassNewView.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,7 +55,17 @@ const router = createRouter({
             path: '/classes',
             name: 'classes',
             component: ClassesView
-        }
+        },
+        {
+            path: '/classes/new',
+            name: 'class-new',
+            component: ClassNewView
+        },
+        {
+            path: '/classes/edit/:id(\\d+)',
+            name: 'class-edit',
+            component: ClassEditView
+        },
     ]
 })
 
