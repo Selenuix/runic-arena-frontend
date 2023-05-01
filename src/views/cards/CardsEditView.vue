@@ -112,6 +112,7 @@ export default {
                 })
 
                 this.message = "Card has been sucessfully edited."
+                this.$router.push('/cards')
             } catch (err) {
                 this.message = err;
             }
