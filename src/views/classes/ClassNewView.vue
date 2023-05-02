@@ -33,7 +33,7 @@ export default {
             e.preventDefault()
 
             let formData = new FormData();
-            formData.append('name', this.type.name);
+            formData.append('name', this.archetype.name);
 
             try {
                 await fetch('http://localhost:3000/classes/', {

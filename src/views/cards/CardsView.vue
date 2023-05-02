@@ -19,12 +19,12 @@
                     <td>{{ card.image }}</td>
                     <td>{{ card.power }}</td>
                     <td>
-                        {{ card.type.name }}
                         <font-awesome-icon :icon="card.type.icon"/>
+                        {{ card.type.name }}
                     </td>
                     <td>
-                        {{ card.class.name }}
                         <font-awesome-icon :icon="card.class.icon"/>
+                        {{ card.class.name }}
                     </td>
                     <td>
                         <RouterLink :to="{name: 'card-edit', params: {id: card.id}}">Edit</RouterLink>

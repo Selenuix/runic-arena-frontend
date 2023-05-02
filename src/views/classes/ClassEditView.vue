@@ -7,7 +7,7 @@
             <form action="#" enctype="multipart/form-data" method="post">
                 <div>
                     <label for="cardName">Name:</label>
-                    <input id="cardName" v-model="archetype.name" name="cardName" type="text">
+                    <input id="cardName" v-model="archetype.name" name="cardName" type="text" autofocus>
                 </div>
                 <div>
                     <button @click="editArchetype">Edit</button>
@@ -46,7 +46,7 @@ export default {
                     method: 'PUT',
                     body: formData
                 }).then(() => {
-                    this.message = "Type has been sucessfully edited."
+                    this.message = "Class has been sucessfully edited."
                     this.$router.push('/classes')
                 })
             } catch (err) {

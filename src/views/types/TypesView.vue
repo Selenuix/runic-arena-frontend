@@ -27,6 +27,7 @@
 
 
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <RouterLink to="/types/new">Add</RouterLink>
         <div class="pb-4 bg-white dark:bg-gray-900">
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative mt-1">
