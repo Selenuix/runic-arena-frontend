@@ -2,7 +2,10 @@
 module.exports = {
     content: [
         "./index.html",
-        "./src/**/*.{vue,js,ts,jsx,tsx}",
+        "./src/views/cards/*.{vue,js,ts,tsx,jsx}",
+        "./src/views/classes/*.{vue,js,ts,tsx,jsx}",
+        "./src/views/types/*.{vue,js,ts,tsx,jsx}",
+        "./src/views/*.{vue,js,ts,tsx,jsx}",
     ],
     theme: {
         extend: {},
