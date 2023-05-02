@@ -16,7 +16,9 @@
                 <tr v-for="(card, index) in cards" :key="index" class="card-item">
                     <td>{{ card.id }}</td>
                     <td>{{ card.name }}</td>
-                    <td>{{ card.image }}</td>
+                    <td>
+                        <img :src="card.image" alt="Card image">
+                    </td>
                     <td>{{ card.power }}</td>
                     <td>
                         <font-awesome-icon :icon="card.type.icon"/>
