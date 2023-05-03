@@ -1,4 +1,5 @@
-import {createRouter, createWebHistory} from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
+import DashboardView from '@/views/DashboardView.vue';
 import HomeView from '@/views/HomeView.vue'
 
 import CardsView from "@/views/cards/CardsView.vue";
@@ -18,54 +19,57 @@ const router = createRouter({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: HomeView
+            name: 'dashboard',
+            component: DashboardView,
+            children: [
+                {
+                    path: '/cards',
+                    name: 'cards',
+                    component: CardsView
+                },
+                {
+                    path: '/cards/new',
+                    name: 'card-new',
+                    component: CardNewView
+                },
+                {
+                    path: '/cards/edit/:id(\\d+)',
+                    name: 'card-edit',
+                    component: CardEditView
+                },
+                {
+                    path: '/types',
+                    name: 'types',
+                    component: TypesView
+                },
+                {
+                    path: '/types/new',
+                    name: 'type-new',
+                    component: TypeNewView
+                },
+                {
+                    path: '/types/edit/:id(\\d+)',
+                    name: 'type-edit',
+                    component: TypeEditView
+                },
+                {
+                    path: '/classes',
+                    name: 'classes',
+                    component: ClassesView
+                },
+                {
+                    path: '/classes/new',
+                    name: 'class-new',
+                    component: ClassNewView
+                },
+                {
+                    path: '/classes/edit/:id(\\d+)',
+                    name: 'class-edit',
+                    component: ClassEditView
+                },
+            ]
         },
-        {
-            path: '/cards',
-            name: 'cards',
-            component: CardsView
-        },
-        {
-            path: '/cards/new',
-            name: 'card-new',
-            component: CardNewView
-        },
-        {
-            path: '/cards/edit/:id(\\d+)',
-            name: 'card-edit',
-            component: CardEditView
-        },
-        {
-            path: '/types',
-            name: 'types',
-            component: TypesView
-        },
-        {
-            path: '/types/new',
-            name: 'type-new',
-            component: TypeNewView
-        },
-        {
-            path: '/types/edit/:id(\\d+)',
-            name: 'type-edit',
-            component: TypeEditView
-        },
-        {
-            path: '/classes',
-            name: 'classes',
-            component: ClassesView
-        },
-        {
-            path: '/classes/new',
-            name: 'class-new',
-            component: ClassNewView
-        },
-        {
-            path: '/classes/edit/:id(\\d+)',
-            name: 'class-edit',
-            component: ClassEditView
-        },
+
     ]
 })
 
