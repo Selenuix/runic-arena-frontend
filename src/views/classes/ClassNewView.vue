@@ -1,6 +1,6 @@
 <template>
     <div class="cards-container">
-        <h1>Add a Type</h1>
+        <h1>Add a Class</h1>
         <div class="cards-items">
             <p v-if="message">{{ message }}</p>
             <form action="#" enctype="multipart/form-data" method="post">
@@ -51,5 +51,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
