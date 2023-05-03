@@ -17,7 +17,7 @@
                     <td>{{ card.id }}</td>
                     <td>{{ card.name }}</td>
                     <td>
-                        <img :src="card.image" alt="Card image">
+                        <img :src="'http://localhost:3000/cards/' + card.id + '/image'" alt="Card image">
                     </td>
                     <td>{{ card.power }}</td>
                     <td>
