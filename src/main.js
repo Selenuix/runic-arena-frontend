@@ -15,7 +15,10 @@ import {
     faXmark,
     faTornado,
     faUser,
-    faRightFromBracket
+    faRightFromBracket,
+    faPenToSquare,
+    faTrash,
+    faEye
 } from '@fortawesome/free-solid-svg-icons'
 import { faMoon, faSun } from '@fortawesome/free-regular-svg-icons'
 import './assets/main.css'
@@ -34,6 +37,9 @@ library.add(faQuestion)
 library.add(faTornado)
 library.add(faUser)
 library.add(faRightFromBracket)
+library.add(faPenToSquare)
+library.add(faTrash)
+library.add(faEye)
 
 import { getChaosMonsterName } from "@/utils/randomizer";
 

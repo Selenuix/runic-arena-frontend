@@ -1,54 +1,50 @@
 <template>
     <div class="about">
         <h1 class="text-2xl font-bold text-left py-2">Manage Types</h1>
-        <div class="flex justify-center items-end space-x-3">
+        <div class="flex justify-center items-end space-x-3 mb-4">
             <div>
                 <h2>Name</h2>
-                <input type="text" class="border border-gray-500 px-3 py-2">
+                <input type="text" class="border border-gray-500 px-3 py-2 " v-model="selectedType.name">
             </div>
             <div>
-                <button class="bg-gray-600 text-white py-2 px-3 hover:bg-gray-500">Save</button>
+                <button class="bg-gray-600 text-white py-2 px-3 hover:bg-gray-500"
+                    @click="createOrUpdateType(selectedType)">Save</button>
             </div>
         </div>
         <div class="overflow-x-auto relative sm:rounded-lg">
-            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead class=" text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-full text-sm text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
                     <tr>
                         <th scope="col" class="py-3 px-6 text-lg">
                             Id
                         </th>
                         <th scope="col" class="py-3 px-6 text-lg">
-                            Icons
-                        </th>
-                        <th scope="col" class="py-3 px-6 text-lg">
                             Names
                         </th>
-                        <th scope="col" class="py-3 px-6 text-right text-lg">
+                        <th scope="col" class="py-3 px-6 text-lg">
                             Actions
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(type, index) in types" :key="index"
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                        <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+                        <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ type.id }}
-                        </th>
+                        </td>
                         <td class="py-4 px-6">
                             <font-awesome-icon :icon="type.icon" />
-                        </td>
-                        <td class="py-4 px-6">
                             {{ type.name }}
                         </td>
-                        <td class="py-4 px-6 text-right">
+                        <td class="py-4 px-6">
                             <div class="inline-flex">
-                                <!--<button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"> Edit
-                                </button>-->
-                                <RouterLink :to="{ name: 'type-edit', params: { id: type.id } }"
-                                    class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l">Edit
-                                </RouterLink>
+                                <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
+                                    @click="editType(type)">
+                                    <font-awesome-icon icon="fa-solid fa-pen-to-square" />
+                                </button>
                                 <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-r"
-                                    @click="deleteType(type.id)"> Delete
+                                    @click="deleteType(type.id)">
+                                    <font-awesome-icon icon="fa-solid fa-trash" />
                                 </button>
                             </div>
                         </td>
@@ -72,8 +68,10 @@ export default {
     data() {
         return {
             types: [],
-            name: "",
+            selectedType: {},
         }
+    }, async created() {
+        await this.getTypes()
     },
     methods: {
         async getTypes() {
@@ -92,33 +90,57 @@ export default {
                 case 'Halo':
                     return faSun
                 default:
-                    return faQuestion // no icon for unknown types
+                    return faQuestion
             }
         },
         async deleteType(typeId) {
             await fetch(`http://localhost:3000/types/${typeId}`, {
                 method: 'DELETE'
+            })
+            if (typeId === this.selectedType.id) {
+                this.selectedType = {}
+            }
+            const index = this.types.findIndex(type => type.id === typeId);
+            this.types.splice(index, 1);
+        },
+        async createOrUpdateType() {
+            if (!this.selectedType.id) {
+                this.addType()
+            } else {
+                this.updateType()
+            }
+            this.selectedType.name = "";
+            this.selectedType = {};
+        },
+        async addType() {
+            const response = await fetch('http://localhost:3000/types', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: this.selectedType.name,
+                }),
+            }).then(() => {
+                this.selectedType.name = ""
+                this.getTypes()
+            });
+        },
+        async updateType() {
+            const response = await fetch(`http://localhost:3000/types/${this.selectedType.id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: this.selectedType.name,
+                }),
             }).then(() => {
                 this.getTypes()
-            })
+            });
         },
-        async addType(e) {
-            e.preventDefault()
-
-            let formData = new FormData();
-            formData.append('name', this.type.name);
-
-            try {
-                await fetch('http://localhost:3000/types/', {
-                    method: 'POST',
-                    body: formData
-                }).then(() => {
-                    this.message = "Type has been sucessfully created."
-                    this.$router.push('/types')
-                })
-            } catch (error) {
-                this.message = error.response.data.message
-            }
+        editType(type) {
+            this.selectedType = { ...type }
         },
     },
     mounted() {
