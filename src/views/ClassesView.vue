@@ -1,14 +1,14 @@
 <template>
     <div class="about">
-        <h1 class="text-2xl font-bold text-left py-2">Manage Types</h1>
+        <h1 class="text-2xl font-bold text-left py-2">Manage Archetypes</h1>
         <div class="flex justify-center items-end space-x-3 mb-4">
             <div>
                 <h2>Name</h2>
-                <input type="text" class="border border-gray-500 px-3 py-2 " v-model="selectedType.name">
+                <input archetype="text" class="border border-gray-500 px-3 py-2 " v-model="selectedArchetype.name">
             </div>
             <div>
                 <button class="bg-gray-600 text-white py-2 px-3 hover:bg-gray-500"
-                    @click="createOrUpdateType(selectedType)">Save</button>
+                    @click="createOrUpdateArchetype(selectedArchetype)">Save</button>
             </div>
         </div>
         <div class="overflow-x-auto relative sm:rounded-lg">
@@ -27,23 +27,23 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(type, index) in types" :key="index"
+                    <tr v-for="(archetype, index) in archetypes" :key="index"
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                         <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ type.id }}
+                            {{ archetype.id }}
                         </td>
                         <td class="py-4 px-6">
-                            <font-awesome-icon :icon="type.icon" />
-                            {{ type.name }}
+                            <font-awesome-icon :icon="archetype.icon" />
+                            {{ archetype.name }}
                         </td>
                         <td class="py-4 px-6">
                             <div class="inline-flex">
                                 <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
-                                    @click="editType(type)">
+                                    @click="editArchetype(archetype)">
                                     <font-awesome-icon icon="fa-solid fa-pen-to-square" />
                                 </button>
                                 <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-r"
-                                    @click="deleteType(type.id)">
+                                    @click="deleteArchetype(archetype.id)">
                                     <font-awesome-icon icon="fa-solid fa-trash" />
                                 </button>
                             </div>
@@ -53,98 +53,108 @@
             </table>
         </div>
     </div>
-    <RouterLink to="/types/new">Add</RouterLink>
 </template>
 
 <script>
-import { faMoon, faQuestion, faSun } from '@fortawesome/free-solid-svg-icons'
+import {
+    faBullseye,
+    faHatWizard,
+    faQuestion,
+    faShield,
+    faStaffSnake,
+    faUserNinja
+} from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 export default {
-    name: "TypesView",
+    name: "ClassesView",
     components: {
         FontAwesomeIcon
     },
     data() {
         return {
-            types: [],
-            selectedType: {},
+            archetypes: [],
+            selectedArchetype: {},
         }
-    }, async created() {
-        await this.getTypes()
     },
     methods: {
-        async getTypes() {
-            const data = await fetch('http://localhost:3000/types')
-            this.types = await data.json()
+        async getArchetypes() {
+            const data = await fetch('http://localhost:3000/classes')
+            this.archetypes = await data.json()
 
-            for (const type of Object.values(this.types)) {
-                let icon = await this.getIconForType(type)
-                Object.assign(type, { "icon": icon })
+            for (const archetype of Object.values(this.archetypes)) {
+                let icon = await this.getIconForArchetype(archetype)
+                Object.assign(archetype, { "icon": icon })
             }
         },
-        getIconForType(type) {
-            switch (type.name) {
-                case 'Chaos':
-                    return faMoon
-                case 'Halo':
-                    return faSun
+        getIconForArchetype(archetype) {
+            switch (archetype.name) {
+                case 'Warrior':
+                    return faShield
+                case 'Healer':
+                    return faStaffSnake
+                case 'Assassin':
+                    return faUserNinja
+                case 'Wizard':
+                    return faHatWizard
+                case 'Archer':
+                    return faBullseye
                 default:
-                    return faQuestion
+                    return faQuestion // icon for unknown types
             }
         },
-        async deleteType(typeId) {
-            await fetch(`http://localhost:3000/types/${typeId}`, {
+        async deleteArchetype(archetypeId) {
+            await fetch(`http://localhost:3000/classes/${archetypeId}`, {
                 method: 'DELETE'
             })
-            if (typeId === this.selectedType.id) {
-                this.selectedType = {}
+            if (archetypeId === this.selectedArchetype.id) {
+                this.selectedArchetype = {}
             }
-            const index = this.types.findIndex(type => type.id === typeId);
-            this.types.splice(index, 1);
+            const index = this.archetypes.findIndex(archetype => archetype.id === archetypeId);
+            this.archetypes.splice(index, 1);
         },
-        async createOrUpdateType() {
-            if (!this.selectedType.id) {
-                this.addType()
+        async createOrUpdateArchetype() {
+            if (!this.selectedArchetype.id) {
+                this.addArchetype()
             } else {
-                this.updateType()
+                this.updateArchetype()
             }
-            this.selectedType.name = "";
-            this.selectedType = {};
+            this.selectedArchetype.name = "";
+            this.selectedArchetype = {};
         },
-        async addType() {
-            const response = await fetch('http://localhost:3000/types', {
+        async addArchetype() {
+            const response = await fetch('http://localhost:3000/classes', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: this.selectedType.name,
+                    name: this.selectedArchetype.name,
                 }),
             }).then(() => {
-                this.selectedType.name = ""
-                this.getTypes()
+                this.selectedArchetype.name = ""
+                this.getArchetypes()
             });
         },
-        async updateType() {
-            const response = await fetch(`http://localhost:3000/types/${this.selectedType.id}`, {
+        async updateArchetype() {
+            const response = await fetch(`http://localhost:3000/classes/${this.selectedArchetype.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: this.selectedType.name,
+                    name: this.selectedArchetype.name,
                 }),
             }).then(() => {
-                this.getTypes()
+                this.getArchetypes()
             });
         },
-        editType(type) {
-            this.selectedType = { ...type }
+        editArchetype(archetype) {
+            this.selectedArchetype = { ...archetype }
         },
     },
     mounted() {
-        this.getTypes()
+        this.getArchetypes()
     }
 }
 </script>
