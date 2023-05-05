@@ -1,6 +1,6 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import DashboardView from '@/views/DashboardView.vue'
-import CardsView from "@/views/CardsView.vue"
+import CardsView from "@/views/cards/CardsView.vue"
 import TypesView from "@/views/TypesView.vue"
 import ClassesView from "@/views/ClassesView.vue"
 
