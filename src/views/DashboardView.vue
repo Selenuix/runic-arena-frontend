@@ -3,7 +3,7 @@
         <div class="w-[400px] h-full bg-gray-200 text-white">
             <div class="h-[50px] bg-gray-900 justify-start items-center">
                 <div class="px-[20px]">
-                    <RouterLink to="/" class="inline-flex relative items-center px-[10px] w-full">
+                    <RouterLink to="/home" class="inline-flex relative items-center px-[10px] w-full">
                         <h3 class="font-bold text-xl">Runic Arena</h3>
                     </RouterLink>
                 </div>
@@ -32,7 +32,7 @@
                     </div>
                     <div class="h-[50px]">
                         <div class="">
-                            <RouterLink to="/exit"
+                            <RouterLink to="#"
                                 class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
                                 <font-awesome-icon icon="fa-solid fa-right-from-bracket"
                                     class="mr-2 w-[25px] h-[25px] fill-current" />
@@ -49,7 +49,7 @@
             </div>
             <div class="h-[calc(100vh-50px)] bg-gray-50 p-[20px]">
                 <div class="border border-gray-300  rounded-md p-[20px] h-full">
-                    <RouterView/>
+                    <RouterView />
                 </div>
             </div>
         </div>
