@@ -40,6 +40,16 @@
                     </select>
                 </div>
                 <div>
+                    <label for="passiveCapability">Passive Capability:</label>
+
+                    <select name="passiveCapability" id="passiveCapability" v-model="card.passiveCapability">
+                        <option v-for="(passiveCapability, index) in passiveCapabilities" :key="index"
+                                :value="passiveCapability.id">
+                            {{ passiveCapability.name }}
+                        </option>
+                    </select>
+                </div>
+                <div>
                     <button @click="editCard">Edit</button>
                 </div>
             </form>
@@ -58,12 +68,14 @@ export default {
                 name: '',
                 image: '',
                 power: 0,
-                type: Number,
+                type: 0,
                 archetype: 0,
+                passiveCapability: 0
             },
             types: {},
             selectedType: 0,
             archetypes: {},
+            passiveCapabilities: {},
             message: ''
         }
     },
@@ -80,6 +92,11 @@ export default {
         async getArchetypes() {
             const data = await fetch('http://localhost:3000/classes')
             this.archetypes = await data.json()
+        },
+
+        async getPassiveCapabilities() {
+            const data = await fetch('http://localhost:3000/passive-capabilities')
+            this.passiveCapabilities = await data.json()
         },
 
         async editCard(e) {
@@ -103,6 +120,7 @@ export default {
             formData.append('power', this.card.power);
             formData.append('type_id', this.card.type);
             formData.append('class_id', this.card.archetype);
+            formData.append('passive_capability_id', this.card.passiveCapability);
 
 
             try {
@@ -128,6 +146,7 @@ export default {
         await this.getCard(this.$route.params.id)
         await this.getTypes()
         await this.getArchetypes()
+        await this.getPassiveCapabilities()
     }
 }
 </script>

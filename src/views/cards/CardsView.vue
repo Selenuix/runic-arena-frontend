@@ -25,12 +25,15 @@
                     <th scope="col" class="py-3 px-6 text-lg">
                         Classes
                     </th>
+                    <th scope="col" class="py-3 px-6 text-lg">
+                        Passive Capability
+                    </th>
                     <th scope="col" class="py-3 px-6 text-right text-lg">
                         Actions
                     </th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="text-center">
                 <tr v-for="(card, index) in cards" :key="index"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -53,12 +56,15 @@
                         <font-awesome-icon :icon="card.class.icon"/>
                         {{ card.class.name }}
                     </td>
+                    <td>
+                        {{ card.passive_capability.name }}
+                    </td>
                     <td class="py-4 px-6 text-right">
                         <div class="inline-flex">
-                            <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
-                                    @click="editCard(card)">
+                            <RouterLink class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
+                                        :to="{name: 'card-edit', params: {id: card.id}}">
                                 <font-awesome-icon icon="fa-solid fa-pen-to-square"/>
-                            </button>
+                            </RouterLink>
 
                             <button class="bg-gray-500 hover:bg-gray-400 text-white font-bold py-2 px-4"
                                     @click="getCard(card.id)">

@@ -40,6 +40,16 @@
                     </select>
                 </div>
                 <div>
+                    <label for="passiveCapability">Passive Capability:</label>
+
+                    <select name="passiveCapability" id="passiveCapability" v-model="card.passiveCapability">
+                        <option v-for="(passiveCapability, index) in passiveCapabilities" :key="index"
+                                :value="passiveCapability.id">
+                            {{ passiveCapability.name }}
+                        </option>
+                    </select>
+                </div>
+                <div>
                     <button @click="addCard">Add</button>
                 </div>
             </form>
@@ -49,6 +59,7 @@
 
 <script>
 import {getMonsterName} from "@/utils/randomizer";
+import cardsView from "@/views/cards/CardsView.vue";
 
 export default {
     name: "CardNewView",
@@ -60,9 +71,11 @@ export default {
                 power: 0,
                 type: 0,
                 archetype: 0,
+                passiveCapability: 0
             },
             types: {},
             archetypes: {},
+            passiveCapabilities: {},
             message: ''
         }
     },
@@ -78,6 +91,7 @@ export default {
             formData.append('power', this.card.power);
             formData.append('type_id', this.card.type);
             formData.append('class_id', this.card.archetype);
+            formData.append('passive_capability_id', this.card.passiveCapability);
 
             try {
                 await fetch('http://localhost:3000/cards/', {
@@ -102,6 +116,11 @@ export default {
             this.archetypes = await data.json()
         },
 
+        async getPassiveCapabilities() {
+            const data = await fetch('http://localhost:3000/passive-capabilities')
+            this.passiveCapabilities = await data.json()
+        },
+
         getRandomMonsterName(e) {
             e.preventDefault()
             this.card.name = getMonsterName()
@@ -110,6 +129,7 @@ export default {
     async mounted() {
         await this.getTypes()
         await this.getArchetypes()
+        await this.getPassiveCapabilities()
     }
 }
 </script>
