@@ -13,18 +13,18 @@
                     <div class="flex flex-col justify-between space-y-[10px]">
 
                         <RouterLink to="/cards"
-                            class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
-                            <font-awesome-icon icon="fa-solid fa-book" class="mr-2 w-[25px] h-[25px] fill-current" />
+                                    class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
+                            <font-awesome-icon icon="fa-solid fa-book" class="mr-2 w-[25px] h-[25px] fill-current"/>
                             Cards
                         </RouterLink>
                         <RouterLink to="/types"
-                            class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
-                            <font-awesome-icon icon="fa-solid fa-tornado" class="mr-2 w-[25px] h-[25px] fill-current" />
+                                    class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
+                            <font-awesome-icon icon="fa-solid fa-tornado" class="mr-2 w-[25px] h-[25px] fill-current"/>
                             Types
                         </RouterLink>
                         <RouterLink to="/classes"
-                            class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
-                            <font-awesome-icon icon="fa-solid fa-user" class="mr-2 w-[25px] h-[25px] fill-current" />
+                                    class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
+                            <font-awesome-icon icon="fa-solid fa-user" class="mr-2 w-[25px] h-[25px] fill-current"/>
                             Classes
                         </RouterLink>
 
@@ -33,9 +33,9 @@
                     <div class="h-[50px]">
                         <div class="">
                             <RouterLink to="#"
-                                class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
+                                        class="inline-flex relative items-center py-[10px] px-[10px] w-full text-sm font-medium rounded-md border-gray-200 hover:bg-gray-200 hover:text-gray-900">
                                 <font-awesome-icon icon="fa-solid fa-right-from-bracket"
-                                    class="mr-2 w-[25px] h-[25px] fill-current" />
+                                                   class="mr-2 w-[25px] h-[25px] fill-current"/>
                                 Exit
                             </RouterLink>
                         </div>
@@ -49,16 +49,14 @@
             </div>
             <div class="h-[calc(100vh-50px)] bg-gray-50 p-[20px]">
                 <div class="border border-gray-300  rounded-md p-[20px] h-full">
-                    <RouterView />
+                    <RouterView/>
                 </div>
             </div>
         </div>
     </div>
 </template>
 <script>
-export default {
-
-}
+export default {}
 </script>
 <style></style>
 

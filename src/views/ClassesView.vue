@@ -8,47 +8,48 @@
             </div>
             <div>
                 <button class="bg-gray-600 text-white py-2 px-3 hover:bg-gray-500"
-                    @click="createOrUpdateArchetype(selectedArchetype)">Save</button>
+                        @click="createOrUpdateArchetype(selectedArchetype)">Save
+                </button>
             </div>
         </div>
         <div class="overflow-x-auto relative sm:rounded-lg">
             <table class="w-full text-sm text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center">
-                    <tr>
-                        <th scope="col" class="py-3 px-6 text-lg">
-                            Id
-                        </th>
-                        <th scope="col" class="py-3 px-6 text-lg">
-                            Names
-                        </th>
-                        <th scope="col" class="py-3 px-6 text-lg">
-                            Actions
-                        </th>
-                    </tr>
+                <tr>
+                    <th scope="col" class="py-3 px-6 text-lg">
+                        Id
+                    </th>
+                    <th scope="col" class="py-3 px-6 text-lg">
+                        Names
+                    </th>
+                    <th scope="col" class="py-3 px-6 text-lg">
+                        Actions
+                    </th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(archetype, index) in archetypes" :key="index"
-                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
-                        <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ archetype.id }}
-                        </td>
-                        <td class="py-4 px-6">
-                            <font-awesome-icon :icon="archetype.icon" />
-                            {{ archetype.name }}
-                        </td>
-                        <td class="py-4 px-6">
-                            <div class="inline-flex">
-                                <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
+                <tr v-for="(archetype, index) in archetypes" :key="index"
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+                    <td scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ archetype.id }}
+                    </td>
+                    <td class="py-4 px-6">
+                        <font-awesome-icon :icon="archetype.icon"/>
+                        {{ archetype.name }}
+                    </td>
+                    <td class="py-4 px-6">
+                        <div class="inline-flex">
+                            <button class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
                                     @click="editArchetype(archetype)">
-                                    <font-awesome-icon icon="fa-solid fa-pen-to-square" />
-                                </button>
-                                <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-r"
+                                <font-awesome-icon icon="fa-solid fa-pen-to-square"/>
+                            </button>
+                            <button class="bg-red-500 hover:bg-red-400 text-white font-bold py-2 px-4 rounded-r"
                                     @click="deleteArchetype(archetype.id)">
-                                    <font-awesome-icon icon="fa-solid fa-trash" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                                <font-awesome-icon icon="fa-solid fa-trash"/>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
                 </tbody>
             </table>
         </div>
@@ -64,7 +65,7 @@ import {
     faStaffSnake,
     faUserNinja
 } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome'
 
 export default {
     name: "ClassesView",
@@ -84,7 +85,7 @@ export default {
 
             for (const archetype of Object.values(this.archetypes)) {
                 let icon = await this.getIconForArchetype(archetype)
-                Object.assign(archetype, { "icon": icon })
+                Object.assign(archetype, {"icon": icon})
             }
         },
         getIconForArchetype(archetype) {
@@ -150,7 +151,7 @@ export default {
             });
         },
         editArchetype(archetype) {
-            this.selectedArchetype = { ...archetype }
+            this.selectedArchetype = {...archetype}
         },
     },
     mounted() {
