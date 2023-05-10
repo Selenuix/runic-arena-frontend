@@ -34,8 +34,8 @@
                 </tr>
                 </thead>
                 <tbody class="text-center">
-                <tr v-for="(card, index) in cards" :key="index"
-                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr v-for="(card, index) in paginatedCards" :key="index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+
                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ card.id }}
                     </th>
@@ -79,6 +79,10 @@
                 </tr>
                 </tbody>
             </table>
+            <nav v-if="cards.length > 3" class="flex justify-between my-4">
+                <button :disabled="pagination.page === 1" @click="pagination.page--">Previous</button>
+            <button :disabled="pagination.page === pageCount" @click="pagination.page++">Next</button>
+  </nav>
         </div>
     </div>
 </template>
@@ -98,7 +102,11 @@ export default {
     name: "CardsView",
     data() {
         return {
-            cards: []
+            cards: [],
+            pagination: {
+                page: 1,
+                perPage: 3
+    }
         }
     },
     methods: {
@@ -124,7 +132,7 @@ export default {
                 case 'Halo':
                     return faSun
                 default:
-                    return null // icon for unknown types
+                    return fa // icon for unknown types
             }
         },
         async getIconForArchetype(archetype) {
@@ -154,8 +162,20 @@ export default {
 
     async mounted() {
         await this.getCards()
+    },
+    computed: {
+        paginatedCards() {
+            const startIndex = (this.pagination.page - 1) * this.pagination.perPage
+            const endIndex = startIndex + this.pagination.perPage
+        return this.cards.slice(startIndex, endIndex)
+    },
+    pageCount() {
+        return Math.ceil(this.cards.length / this.pagination.perPage)
     }
+}
+
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+</style>
