@@ -58,8 +58,6 @@
 </template>
 
 <script>
-import {getMonsterName} from "@/utils/randomizer";
-
 export default {
     name: "CardEditView",
     data() {
@@ -137,9 +135,9 @@ export default {
 
         },
 
-        getRandomMonsterName(e) {
+        async getRandomMonsterName(e) {
             e.preventDefault()
-            this.card.name = getMonsterName()
+            this.card.name = await fetch('https://localhost:3000/cards/name-generator')
         },
     },
     async mounted() {

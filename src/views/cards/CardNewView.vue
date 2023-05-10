@@ -58,9 +58,6 @@
 </template>
 
 <script>
-import {getMonsterName} from "@/utils/randomizer";
-import cardsView from "@/views/cards/CardsView.vue";
-
 export default {
     name: "CardNewView",
     data() {
@@ -121,9 +118,9 @@ export default {
             this.passiveCapabilities = await data.json()
         },
 
-        getRandomMonsterName(e) {
+        async getRandomMonsterName(e) {
             e.preventDefault()
-            this.card.name = getMonsterName()
+            this.card.name = await fetch('https://localhost:3000/cards/name-generator')
         },
     },
     async mounted() {

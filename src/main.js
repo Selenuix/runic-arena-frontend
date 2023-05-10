@@ -41,8 +41,6 @@ library.add(faPenToSquare)
 library.add(faTrash)
 library.add(faEye)
 
-import {getChaosMonsterName} from "@/utils/randomizer";
-
 const app = createApp(App)
 
 app.use(router)

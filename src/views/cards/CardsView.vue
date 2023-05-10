@@ -106,6 +106,8 @@ export default {
             const data = await fetch('http://localhost:3000/cards')
             this.cards = await data.json()
 
+            console.log(this.cards)
+
             for (const card of Object.values(this.cards)) {
                 let icon = await this.getIconForType(card.type)
                 let archetypeIcon = await this.getIconForArchetype(card.class)
