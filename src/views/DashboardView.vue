@@ -27,8 +27,6 @@
                             <font-awesome-icon icon="fa-solid fa-user" class="mr-2 w-[25px] h-[25px] fill-current"/>
                             Classes
                         </RouterLink>
-
-
                     </div>
                     <div class="h-[50px]">
                         <div class="">
@@ -44,9 +42,7 @@
             </div>
         </div>
         <div class="w-full h-full bg-gray-400">
-            <div class="h-[50px] bg-gray-100 flex items-center shadow-sm px-[20px] w-full py-[10px] z-10 border-b">
-                Header Sidebar
-            </div>
+            <div class="h-[50px] bg-gray-100 flex items-center shadow-sm px-[20px] w-full py-[10px] z-10 border-b"></div>
             <div class="h-[calc(100vh-50px)] bg-gray-50 p-[20px]">
                 <div class="border border-gray-300  rounded-md p-[20px] h-full">
                     <RouterView/>

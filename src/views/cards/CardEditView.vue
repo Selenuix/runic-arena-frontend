@@ -40,7 +40,7 @@
                     </select>
                 </div>
                 <div>
-                    <label for="passiveCapability">Passive Capability:</label>
+                    <label for="passiveCapability">Condition:</label>
 
                     <select name="passiveCapability" id="passiveCapability" v-model="card.passiveCapability">
                         <option v-for="(passiveCapability, index) in passiveCapabilities" :key="index"

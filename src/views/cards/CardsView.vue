@@ -26,7 +26,7 @@
                         Classes
                     </th>
                     <th scope="col" class="py-3 px-6 text-lg">
-                        Passive Capability
+                        Condition
                     </th>
                     <th scope="col" class="py-3 px-6 text-lg">
                         Active Capabilities
