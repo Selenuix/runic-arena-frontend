@@ -14,6 +14,7 @@ const router = createRouter({
             path: '/',
             name: 'dashboard',
             component: DashboardView,
+            redirect: '/home',
             children: [
                 {
                     path: '/home',

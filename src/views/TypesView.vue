@@ -30,7 +30,7 @@
                 <tbody>
                 <tr v-for="(type, index) in types" :key="index"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
-                    <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white" scope="row">
+                    <td class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ type.id }}
                     </td>
                     <td class="py-4 px-6">
