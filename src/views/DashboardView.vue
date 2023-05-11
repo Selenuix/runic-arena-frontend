@@ -4,7 +4,7 @@
             <div class="h-[50px] bg-gray-900 justify-start items-center">
                 <div class="px-[20px]">
                     <RouterLink to="/home" class="inline-flex relative items-center px-[10px] w-full">
-                        <h3 class="font-bold text-xl">Runic Arena</h3>
+                        <h3 class="font-bold text-xl mt-3">Runic Arena</h3>
                     </RouterLink>
                 </div>
             </div>
