@@ -28,13 +28,17 @@
                     <th scope="col" class="py-3 px-6 text-lg">
                         Passive Capability
                     </th>
+                    <th scope="col" class="py-3 px-6 text-lg">
+                        Active Capabilities
+                    </th>
                     <th scope="col" class="py-3 px-6 text-right text-lg">
                         Actions
                     </th>
                 </tr>
                 </thead>
                 <tbody class="text-center">
-                    <tr v-for="(card, index) in paginatedCards" :key="index" class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <tr v-for="(card, index) in paginatedCards" :key="index"
+                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
 
                     <th scope="row" class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ card.id }}
@@ -59,6 +63,11 @@
                     <td>
                         {{ card.passive_capability.name }}
                     </td>
+                    <td>
+                        <p v-for="(capabilities, key) in card.active_capabilities">
+                            {{ capabilities.active_capability.name }}
+                        </p>
+                    </td>
                     <td class="py-4 px-6 text-right">
                         <div class="inline-flex">
                             <RouterLink class="bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 rounded-l"
@@ -81,8 +90,8 @@
             </table>
             <nav v-if="cards.length > 3" class="flex justify-between my-4">
                 <button :disabled="pagination.page === 1" @click="pagination.page--">Previous</button>
-            <button :disabled="pagination.page === pageCount" @click="pagination.page++">Next</button>
-  </nav>
+                <button :disabled="pagination.page === pageCount" @click="pagination.page++">Next</button>
+            </nav>
         </div>
     </div>
 </template>
@@ -92,6 +101,7 @@ import {
     faBullseye,
     faHatWizard,
     faMoon,
+    faQuestion,
     faShield,
     faStaffSnake,
     faSun,
@@ -106,7 +116,7 @@ export default {
             pagination: {
                 page: 1,
                 perPage: 3
-    }
+            }
         }
     },
     methods: {
@@ -114,7 +124,7 @@ export default {
             const data = await fetch('http://localhost:3000/cards')
             this.cards = await data.json()
 
-            console.log(this.cards)
+            console.log(this.cards[0].active_capabilities[0].active_capability.name)
 
             for (const card of Object.values(this.cards)) {
                 let icon = await this.getIconForType(card.type)
@@ -132,7 +142,7 @@ export default {
                 case 'Halo':
                     return faSun
                 default:
-                    return fa // icon for unknown types
+                    return faQuestion // icon for unknown types
             }
         },
         async getIconForArchetype(archetype) {
@@ -148,7 +158,7 @@ export default {
                 case 'Archer':
                     return faBullseye
                 default:
-                    return null // icon for unknown types
+                    return faQuestion // icon for unknown types
             }
         },
         async deleteCard(cardId) {
@@ -167,12 +177,12 @@ export default {
         paginatedCards() {
             const startIndex = (this.pagination.page - 1) * this.pagination.perPage
             const endIndex = startIndex + this.pagination.perPage
-        return this.cards.slice(startIndex, endIndex)
-    },
-    pageCount() {
-        return Math.ceil(this.cards.length / this.pagination.perPage)
+            return this.cards.slice(startIndex, endIndex)
+        },
+        pageCount() {
+            return Math.ceil(this.cards.length / this.pagination.perPage)
+        }
     }
-}
 
 }
 </script>

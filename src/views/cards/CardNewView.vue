@@ -120,7 +120,8 @@ export default {
 
         async getRandomMonsterName(e) {
             e.preventDefault()
-            this.card.name = await fetch('https://localhost:3000/cards/name-generator')
+            let data = await fetch('http://localhost:3000/cards/name-generator')
+            this.card.name = await data.json()
         },
     },
     async mounted() {
